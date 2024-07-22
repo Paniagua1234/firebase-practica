@@ -1,47 +1,60 @@
 import React,{ useEffect,useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-native';
 
-import { getAuth, createUserWithEmailAndPassword, SignInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { initializeApp } from '@firebase/app';
+import { firebaseConfig } from './firebase-config'
+import { TextInput } from 'react-native-gesture-handler';
+import { text } from 'stream/consumers';
+import { error } from 'console';
 
 
 export default function Login({ navigation }) {
 
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const handlerCreateAccount = () => {
+        createUserWithEmailAndPassword(auth, email, password)
+        .then ((userCredential) => {
+            console.log('Usuario creado')
+            const user = userCredential.user;
+            console.log(user)
+        })
+        .catch(error => {
+            console.log(error)
+            Alert.alert(error.message)
+        })
+    }
+
+    const handleSignIn = () => {
+        signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            console.log('Credenciales correctas')
+            const user = userCredential.user;
+            console.log(user)
+        })
+        .catch( error => {
+            console.log(error)
+        })
+    }
+
     return (
         <View style={styles.container}>
-          
-    
-          
-    
           <View style={[styles.loginContainer, { backgroundColor: '#333', borderWidth: 2, borderColor: '#fff' }]}>
-            <Input
-              placeHolder='Usuario'
-              setValor={usuario}
-              setTextChange={setUsuario}
-              inputStyle={[styles.inputField, { color: '#fff' }]}
-            />
-            <Input
-              placeHolder='Contraseña'
-              setValor={contrasenia}
-              setTextChange={setContrasenia}
-              contra={isContra}
-              inputStyle={[styles.inputField, { color: '#fff' }]}
-            />
-            <Buttons
-              textoBoton='Iniciar Sesión'
-              accionBoton={handlerLogin}
-              buttonStyle={[styles.loginButton, { backgroundColor: '#FF0000' }]}
-              textStyle={{ color: '#fff' }}
-            />
-              {/* Boton de ayuda para finalizar la sesión */}
-          <Buttons
-            textoBoton='Cerrar Sesion'
-            accionBoton={cerrarSesion}
-            buttonStyle={[styles.closeButton]}
-            textStyle={styles.closeText}
-          />
+            <Text>E-mail</Text>
+            <TextInput onChangeText={(text) => setEmail(text)}/>
+            <Text>Contraseña</Text>
+            <TextInput onChangeText={(text) => setPassword(text)}/>            
           </View>
-    
-          <TouchableOpacity onPress={irRegistrar} style={styles.BotonRegistrar}>
+
+          <TouchableOpacity onPress={handleSignIn} style={styles.BotonRegistrar}>
+            <Text style={styles.textRegistrar}>Registrar Usuario</Text>
+          </TouchableOpacity>    
+          <TouchableOpacity onPress={handlerCreateAccount} style={styles.BotonRegistrar}>
             <Text style={styles.textRegistrar}>Registrar Usuario</Text>
           </TouchableOpacity>
     
