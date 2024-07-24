@@ -7,6 +7,7 @@ import { firebaseConfig } from './firebase-config'
 import { TextInput } from 'react-native-gesture-handler';
 import { text } from 'stream/consumers';
 import { error } from 'console';
+import { firebaseAuth } from '../config/firebase';
 
 
 export default function Login({ navigation }) {
@@ -15,7 +16,7 @@ export default function Login({ navigation }) {
     const [password, setPassword] = React.useState('');
 
     const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+    const auth = firebaseAuth;
 
     const handlerCreateAccount = () => {
         createUserWithEmailAndPassword(auth, email, password)
@@ -46,13 +47,13 @@ export default function Login({ navigation }) {
         <View style={styles.container}>
           <View style={[styles.loginContainer, { backgroundColor: '#333', borderWidth: 2, borderColor: '#fff' }]}>
             <Text>E-mail</Text>
-            <TextInput onChangeText={(text) => setEmail(text)}/>
+            <TextInput value={email} onChangeText={(text) => setEmail(text)}/>
             <Text>Contraseña</Text>
-            <TextInput onChangeText={(text) => setPassword(text)}/>            
+            <TextInput value={password} onChangeText={(text) => setPassword(text)}/>            
           </View>
 
           <TouchableOpacity onPress={handleSignIn} style={styles.BotonRegistrar}>
-            <Text style={styles.textRegistrar}>Registrar Usuario</Text>
+            <Text style={styles.textRegistrar}>Acceder</Text>
           </TouchableOpacity>    
           <TouchableOpacity onPress={handlerCreateAccount} style={styles.BotonRegistrar}>
             <Text style={styles.textRegistrar}>Registrar Usuario</Text>

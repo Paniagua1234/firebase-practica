@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 import { getStorage } from 'firebase/storage';
 import { API_KEY, AUTH_DOMAIN, PROJECT_ID, STORAGE_BUCKET, MESSAGING_SENDER_ID, APP_ID } from '@env';
 
@@ -38,4 +39,6 @@ if (storage) {
   console.log('storage initialization failed');
 }
 
-export { database,storage };
+const firebaseAuth = getAuth(app);
+
+export { database,storage, firebaseAuth };
