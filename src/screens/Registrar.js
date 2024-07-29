@@ -22,6 +22,7 @@ export default function Registrar({ navigation }) {
         }
         catch (error){
           console.log(error);
+          alert('Registro fallado');
         }
     }
 
