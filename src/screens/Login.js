@@ -1,5 +1,5 @@
 import React,{ useEffect,useState } from 'react';
-import { StyleSheet, Text, TextInput, View, Image, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Image, TouchableOpacity, Alert, Platform } from 'react-native';
 
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 
@@ -16,33 +16,30 @@ export default function Login({ navigation }) {
     const auth = firebaseAuth;
 
     const handlerCreateAccount = async() => {
-        try{
-          const response = await createUserWithEmailAndPassword(auth, email, password);
-          console.log(response);
-        }
-        catch (error){
-          console.log(error);
-        }
+      navigation.navigate('Registrar');
     }
 
     const handleSignIn = async() => {
       try{
         const response = await signInWithEmailAndPassword(auth, email, password);
         console.log(response);
+        alert('Inicio de sesion completado')
         navigation.navigate('Home');
       }
       catch (error){
+        alert('Inicio de sesion fallado')
         console.log(error);
       }
     }
 
     return (
         <View style={styles.container}>
-          <View >
-            <Text>E-mail</Text>
-            <TextInput inputStyle={[styles.inputField, { color: '#fff' }]} value={email} onChangeText={(text) => setEmail(text)}/>
-            <Text>Contraseña</Text>
-            <TextInput value={password} onChangeText={(text) => setPassword(text)}/>            
+          <Text style={styles.textofInputspace}>Login</Text>
+          <View>
+            <Text style={styles.textofInput}>E-mail</Text>
+            <TextInput style={styles.Input} value={email} onChangeText={(text) => setEmail(text)}/>
+            <Text style={styles.textofInput}>Contraseña</Text>
+            <TextInput style={styles.Input} value={password} onChangeText={(text) => setPassword(text)}/>            
           </View>
 
           <TouchableOpacity onPress={handleSignIn} style={styles.BotonRegistrar}>
@@ -64,15 +61,28 @@ export default function Login({ navigation }) {
         alignItems: 'center',
         justifyContent: 'center',
       },
-    
-      button: {
-        borderWidth: 2,
-        borderColor: "#AF8260",
-        width: 150,
-        borderRadius: 10,
-        backgroundColor: "#AF8260",
-        padding: 10,
-        marginVertical: 10
+  
+      textofInput: {
+        textAlign: 'center',
+        color: "#FFF", fontWeight: '800', textTransform: 'uppercase',
+        fontSize: 20
+      },
+  
+      textofInputspace: {
+        textAlign: 'center',
+        color: "#FFF", fontWeight: '800', textTransform: 'uppercase',
+        fontSize: 40,
+        marginBottom: 100
+      },
+  
+      Input: {
+        backgroundColor:'#A79277',
+        color: "#fff", fontWeight:'800',
+        width:250,
+        height: Platform.OS === 'ios' ? 50 : 50, // Estilo de la barra de pestañas, altura diferente para iOS y Android
+        borderRadius:5,
+        padding: 5,
+        marginVertical:10
       },
     
       BotonRegistrar: {
@@ -101,49 +111,6 @@ export default function Login({ navigation }) {
         fontWeight: '700',
         textAlign: 'center',
         fontSize: 18
-      },
-    
-      image: {
-        width: 150,
-        height: 75,
-        marginBottom: 10
-      },
-    
-      loginContainer: {
-        padding: 20,
-        borderRadius: 10,
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
-      },
-    
-      inputField: {
-        height: 40,
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 5,
-        paddingHorizontal: 10,
-        marginBottom: 10,
-      },
-    
-      loginButton: {
-        paddingVertical: 10,
-        borderRadius: 5,
-        alignItems: 'center',
-      },
-    
-      closeButton: {
-        marginTop: 10,
-      },
-    
-      closeText: {
-        color: '#fff',
-        textDecorationLine: 'underline',
       },
     });
     
