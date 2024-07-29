@@ -3,10 +3,10 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-na
 
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { initializeApp } from '@firebase/app';
-import { firebaseConfig } from './firebase-config'
+import { firebaseConfig } from '../config/firebase';
 import { TextInput } from 'react-native-gesture-handler';
-import { text } from 'stream/consumers';
-import { error } from 'console';
+
+
 import { firebaseAuth } from '../config/firebase';
 
 
@@ -15,32 +15,28 @@ export default function Login({ navigation }) {
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
 
-    const app = initializeApp(firebaseConfig);
+    
     const auth = firebaseAuth;
 
-    const handlerCreateAccount = () => {
-        createUserWithEmailAndPassword(auth, email, password)
-        .then ((userCredential) => {
-            console.log('Usuario creado')
-            const user = userCredential.user;
-            console.log(user)
-        })
-        .catch(error => {
-            console.log(error)
-            Alert.alert(error.message)
-        })
+    const handlerCreateAccount = async() => {
+        try{
+          const response = await createUserWithEmailAndPassword(auth, email, password);
+          console.log(response);
+        }
+        catch (error){
+          console.log(error);
+        }
     }
 
-    const handleSignIn = () => {
-        signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            console.log('Credenciales correctas')
-            const user = userCredential.user;
-            console.log(user)
-        })
-        .catch( error => {
-            console.log(error)
-        })
+    const handleSignIn = async() => {
+      try{
+        const response = await signInWithEmailAndPassword(auth, email, password);
+        console.log(response);
+      }
+      catch (error){
+        console.log(error);
+        alert('Failed: ' + error.message);
+      }
     }
 
     return (
