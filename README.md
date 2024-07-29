@@ -4,7 +4,7 @@ Estudiante: Rafael José Paniagua González
 
 Dependencias:
 
-- npm expo install firebase
+- npm install firebase
 - npm install expo-constants
 - npm install react-native-dotenv
 - npm install react-native-gesture-handler
