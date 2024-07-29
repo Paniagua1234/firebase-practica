@@ -39,7 +39,7 @@ export default function Login({ navigation }) {
             <Text style={styles.textofInput}>E-mail</Text>
             <TextInput style={styles.Input} value={email} onChangeText={(text) => setEmail(text)}/>
             <Text style={styles.textofInput}>Contraseña</Text>
-            <TextInput style={styles.Input} value={password} onChangeText={(text) => setPassword(text)}/>            
+            <TextInput secureTextEntry={true} style={styles.Input} value={password} onChangeText={(text) => setPassword(text)}/>            
           </View>
 
           <TouchableOpacity onPress={handleSignIn} style={styles.BotonRegistrar}>
