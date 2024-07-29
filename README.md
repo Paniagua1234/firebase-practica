@@ -14,3 +14,6 @@ Dependencias:
 - npm install @react-navigation/native-stack @react-navigation/native
 - npm install expo-image-picker
 - npm install -g eas-cli
+
+  
+https://expo.dev/accounts/paniaguarafael/projects/firebase-perfil/builds/32e96b91-07d6-44d7-97a9-52d75b707827
