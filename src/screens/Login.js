@@ -1,10 +1,7 @@
 import React,{ useEffect,useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Image, TouchableOpacity, Alert } from 'react-native';
 
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { initializeApp } from '@firebase/app';
-import { firebaseConfig } from '../config/firebase';
-import { TextInput } from 'react-native-gesture-handler';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 
 
 import { firebaseAuth } from '../config/firebase';
@@ -32,18 +29,18 @@ export default function Login({ navigation }) {
       try{
         const response = await signInWithEmailAndPassword(auth, email, password);
         console.log(response);
+        navigation.navigate('Home');
       }
       catch (error){
         console.log(error);
-        alert('Failed: ' + error.message);
       }
     }
 
     return (
         <View style={styles.container}>
-          <View style={[styles.loginContainer, { backgroundColor: '#333', borderWidth: 2, borderColor: '#fff' }]}>
+          <View >
             <Text>E-mail</Text>
-            <TextInput value={email} onChangeText={(text) => setEmail(text)}/>
+            <TextInput inputStyle={[styles.inputField, { color: '#fff' }]} value={email} onChangeText={(text) => setEmail(text)}/>
             <Text>Contraseña</Text>
             <TextInput value={password} onChangeText={(text) => setPassword(text)}/>            
           </View>
